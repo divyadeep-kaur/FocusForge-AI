@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Tasks | FocusForge AI{% endblock %}
+{% block content %}
+<header class="page-header">
+    <div>
+        <p class="eyebrow">Notion-style planner</p>
+        <h1>Task planner</h1>
+    </div>
+</header>
+
+<section class="planner-layout">
+    <form class="panel task-form" method="POST">
+        <h2>Add task</h2>
+        <label>Title<input name="title" required placeholder="Read chapter 4"></label>
+        <label>Description<textarea name="description" rows="4" placeholder="Notes, links, or success criteria"></textarea></label>
+        <label>Date<input type="date" name="due_date" required></label>
+        <button class="btn primary full" type="submit">Add task</button>
+    </form>
+
+    <div class="panel">
+        <div class="panel-title">
+            <h2>Calendar list</h2>
+            <span>{{ tasks|length }} total</span>
+        </div>
+        <div class="task-board">
+            {% for task in tasks %}
+            <article class="task-item {% if task.completed %}complete{% endif %}">
+                <label>
+                    <input type="checkbox" data-task-id="{{ task.id }}" {% if task.completed %}checked{% endif %}>
+                    <span>
+                        <strong>{{ task.title }}</strong>
+                        <small>{{ task.due_date }} · {{ task.description or "No description" }}</small>
+                    </span>
+                </label>
+                <form method="POST" action="{{ url_for('delete_task', task_id=task.id) }}">
+                    <button class="text-btn" type="submit">Delete</button>
+                </form>
+            </article>
+            {% else %}
+            <p class="empty">Your planner is clear. Add a task to begin earning XP.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/tasks.js') }}"></script>
+{% endblock %}

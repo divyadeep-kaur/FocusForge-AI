@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}AI Coach | FocusForge AI{% endblock %}
+{% block content %}
+<header class="page-header">
+    <div>
+        <p class="eyebrow">Productivity assistant</p>
+        <h1>AI coach</h1>
+    </div>
+</header>
+
+<section class="chat-layout panel">
+    <div class="chat-stream" id="chatStream">
+        <div class="chat-message bot">
+            <strong>FocusForge Coach</strong>
+            <p>Tell me what you are working on, where you feel stuck, or how much time you have.</p>
+        </div>
+    </div>
+    <form class="chat-form" id="chatForm">
+        <input id="chatInput" placeholder="Ask for a study plan, focus reset, or motivation..." autocomplete="off">
+        <button class="btn primary" type="submit">Send</button>
+    </form>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
+{% endblock %}

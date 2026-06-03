@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Log In | FocusForge AI{% endblock %}
+{% block content %}
+<section class="auth-wrap">
+    <a class="brand" href="{{ url_for('index') }}">
+        <span class="brand-mark">F</span>
+        <span>FocusForge AI</span>
+    </a>
+    <form class="auth-card" method="POST">
+        <h1>Welcome back</h1>
+        <p>Return to your focus streak and next milestone.</p>
+        <label>Username or email<input name="identifier" required autocomplete="username"></label>
+        <label>Password<input type="password" name="password" required autocomplete="current-password"></label>
+        <button class="btn primary full" type="submit">Log in</button>
+        <span class="form-note">New here? <a href="{{ url_for('signup') }}">Create an account</a></span>
+    </form>
+</section>
+{% endblock %}

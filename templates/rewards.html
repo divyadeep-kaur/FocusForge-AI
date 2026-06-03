@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Rewards | FocusForge AI{% endblock %}
+{% block content %}
+<header class="page-header">
+    <div>
+        <p class="eyebrow">{{ user.xp }} XP earned</p>
+        <h1>Rewards path</h1>
+    </div>
+</header>
+
+<section class="reward-hero panel">
+    <div>
+        <span class="tier-pill">{{ user.level }}</span>
+        <h2>Level progression</h2>
+        <p>Complete tasks to earn XP, protect your streak, and unlock new status rewards.</p>
+    </div>
+    <div class="level-meter">
+        <strong>{{ level_progress }}%</strong>
+        <div class="progress"><span style="width: {{ level_progress }}%"></span></div>
+    </div>
+</section>
+
+<section class="rewards-grid">
+    {% for reward in rewards %}
+    <article class="reward-card {% if user.xp >= reward.xp_required %}unlocked{% endif %}">
+        <span>{{ reward.tier }}</span>
+        <h2>{{ reward.name }}</h2>
+        <p>{{ reward.description }}</p>
+        <strong>{% if user.xp >= reward.xp_required %}Unlocked{% else %}{{ reward.xp_required - user.xp }} XP left{% endif %}</strong>
+    </article>
+    {% endfor %}
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/rewards.js') }}"></script>
+{% endblock %}

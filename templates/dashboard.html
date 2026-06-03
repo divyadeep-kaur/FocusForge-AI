@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | FocusForge AI{% endblock %}
+{% block content %}
+<header class="page-header">
+    <div>
+        <p class="eyebrow">Good momentum, {{ user.username }}</p>
+        <h1>Command center</h1>
+    </div>
+    <a class="btn primary" href="{{ url_for('focusroom') }}">Open focus room</a>
+</header>
+
+<section class="metrics-grid">
+    <article class="metric-card">
+        <span>XP</span>
+        <strong>{{ user.xp }}</strong>
+        <div class="progress"><span style="width: {{ level_progress }}%"></span></div>
+        <small>{{ user.level }} level</small>
+    </article>
+    <article class="metric-card">
+        <span>Current streak</span>
+        <strong>{{ current_streak }}</strong>
+        <small>Best: {{ best_streak }} days</small>
+    </article>
+    <article class="metric-card">
+        <span>Completed</span>
+        <strong>{{ completed }}</strong>
+        <small>{{ pending }} tasks pending</small>
+    </article>
+    <article class="metric-card">
+        <span>Next reward</span>
+        <strong>{% if next_reward %}{{ next_reward.xp_required - user.xp }} XP{% else %}Unlocked{% endif %}</strong>
+        <small>{% if next_reward %}{{ next_reward.name }}{% else %}All rewards earned{% endif %}</small>
+    </article>
+</section>
+
+<section class="dashboard-grid">
+    <article class="panel timer-card">
+        <div class="panel-title">
+            <h2>Pomodoro forge</h2>
+            <button class="icon-btn" id="openFocusModal" title="Fullscreen timer">Expand</button>
+        </div>
+        {% include "partials/timer.html" %}
+    </article>
+
+    <article class="panel">
+        <div class="panel-title">
+            <h2>Today tasks</h2>
+            <a href="{{ url_for('tasks') }}">Manage</a>
+        </div>
+        <div class="task-stack">
+            {% for task in today_tasks[:5] %}
+            <label class="task-row">
+                <input type="checkbox" data-task-id="{{ task.id }}" {% if task.completed %}checked{% endif %}>
+                <span>
+                    <strong>{{ task.title }}</strong>
+                    <small>{{ task.description or "No description" }}</small>
+                </span>
+            </label>
+            {% else %}
+            <p class="empty">No tasks for today. Add one small win.</p>
+            {% endfor %}
+        </div>
+    </article>
+
+    <article class="panel wide">
+        <div class="panel-title">
+            <h2>Activity calendar</h2>
+            <span>{{ current_streak }} day streak</span>
+        </div>
+        <div class="heatmap">
+            {% for day in calendar_days %}
+            <span class="heat heat-{{ [day['count'], 4]|min }} {% if day.today %}today{% endif %}" title="{{ day.date }}: {{ day['count'] }} completed">{{ day.label }}</span>
+            {% endfor %}
+        </div>
+    </article>
+
+    <article class="panel">
+        <div class="panel-title">
+            <h2>Leaderboard</h2>
+            <span>Study friends</span>
+        </div>
+        <div class="leaderboard">
+            {% for member in leaderboard %}
+            <div>
+                <span>{{ loop.index }}. {{ member.username }}</span>
+                <strong>{{ member.xp }} XP</strong>
+            </div>
+            {% endfor %}
+        </div>
+    </article>
+</section>
+
+<div class="modal" id="focusModal" aria-hidden="true">
+    <div class="modal-card">
+        <button class="icon-btn close-modal" title="Close">Close</button>
+        <h2>Fullscreen focus sprint</h2>
+        {% include "partials/timer.html" %}
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/timer.js') }}"></script>
+<script src="{{ url_for('static', filename='js/tasks.js') }}"></script>
+{% endblock %}

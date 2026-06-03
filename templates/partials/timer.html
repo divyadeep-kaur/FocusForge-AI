@@ -1,0 +1,24 @@
+<div class="timer" data-duration="1500">
+    <div class="mode-tabs">
+        <button data-minutes="25" class="active">25 min</button>
+        <button data-minutes="60">1 hour</button>
+        <button data-minutes="5">Short break</button>
+        <button data-minutes="15">Long break</button>
+    </div>
+    <div class="timer-face">
+        <svg viewBox="0 0 120 120" aria-hidden="true">
+            <circle cx="60" cy="60" r="54"></circle>
+            <circle class="timer-progress" cx="60" cy="60" r="54"></circle>
+        </svg>
+        <strong class="timer-display">25:00</strong>
+    </div>
+    <div class="custom-time">
+        <label>Custom minutes<input type="number" min="1" max="180" value="25"></label>
+        <button class="btn ghost apply-custom" type="button">Apply</button>
+    </div>
+    <div class="timer-actions">
+        <button class="btn primary start-timer" type="button">Start</button>
+        <button class="btn ghost pause-timer" type="button">Pause</button>
+        <button class="btn ghost reset-timer" type="button">Reset</button>
+    </div>
+</div>

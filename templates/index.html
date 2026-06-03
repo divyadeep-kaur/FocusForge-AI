@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}FocusForge AI | Gamified Productivity{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <a class="brand" href="{{ url_for('index') }}">
+            <span class="brand-mark">F</span>
+            <span>FocusForge AI</span>
+        </a>
+        <h1>FocusForge AI</h1>
+        <p>Build deep work habits with Pomodoro sprints, task planning, XP rewards, streaks, and an AI coach that keeps your momentum alive.</p>
+        <div class="hero-actions">
+            <a class="btn primary" href="{{ url_for('signup') }}">Start forging focus</a>
+            <a class="btn ghost" href="{{ url_for('login') }}">Log in</a>
+        </div>
+        <div class="hero-stats">
+            <span><strong>25m</strong> focus sprints</span>
+            <span><strong>XP</strong> progression</span>
+            <span><strong>AI</strong> coach</span>
+        </div>
+    </div>
+    <div class="hero-board" aria-label="FocusForge dashboard preview">
+        <div class="preview-top">
+            <span>Today</span>
+            <strong>Level Bronze</strong>
+        </div>
+        <div class="preview-ring">25:00</div>
+        <div class="preview-list">
+            <span class="done"></span> Physics revision block
+            <span></span> Draft client proposal
+            <span></span> Read 15 pages
+        </div>
+    </div>
+</section>
+{% endblock %}
